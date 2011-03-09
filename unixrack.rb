@@ -230,7 +230,7 @@ module Rack
   module Handler
     class UnixRack
 
-      def self.run(app, options=nil)
+      def self.run(app, options={})
 
         require 'socket'
         port = options[:port] || 8080
