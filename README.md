@@ -20,23 +20,23 @@ put instructions here
 
 put instructions here
 
-   $ gem install sinatra
-   $ gem build unixrack.gemspec
-   $ gem install unirack*gem
+    $ gem install sinatra
+    $ gem build unixrack.gemspec
+    $ gem install unirack*gem
 
-   #!/usr/bin/ruby
+    #!/usr/bin/ruby
 
-   require 'rubygems'
-   require 'sinatra/base'
-   require 'unixrack'
+    require 'rubygems'
+    require 'sinatra/base'
+    require 'unixrack'
 
-   class MyApp < Sinatra::Base
-     get '/' do
-       "Hello"
-     end
-   end
+    class MyApp < Sinatra::Base
+      get '/' do
+        "Hello"
+      end
+    end
 
-   Rack::Handler::UnixRack.run(MyApp.new)
+    Rack::Handler::UnixRack.run(MyApp.new)
 
 ## usage
 
