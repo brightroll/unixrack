@@ -30,6 +30,10 @@ module UnixRack
       @buff = ""
     end
 
+    def addr
+      @sock.addr
+    end
+
     def self.write_buff(io, buff)
       len = buff.length
       nwritten = 0
@@ -341,6 +345,7 @@ module Rack
 
               env["SERVER_NAME"] = host
               env["SERVER_PORT"] = port
+              env["REMOTE_ADDR"] = sock.addr.last
 
               env["HTTP_VERSION"] = "HTTP/1.1"
               if sock.headers['If-Modified-Since']
