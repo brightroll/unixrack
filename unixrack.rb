@@ -240,6 +240,7 @@ module Rack
         port = options[:port] || 8080
         host = options[:host] || '127.0.0.1'
         listen = options[:listen] || '127.0.0.1'
+        allowed_ips = options[:allowed_ips] || []
         server = TCPServer.new(listen, port)
 
         trap(:CHLD) do
@@ -292,6 +293,13 @@ module Rack
             puts "#{$$}: Request: #{sock.hdr_method.inspect}"
             $stdout.flush
             Alarm.alarm(60)               # if command not handled in 60 seconds 
+
+            if not allowed_ips.empty?
+              client_ip = sock.peeraddr.last
+              if not (allowed_ips.any? { |e| client_ip.include? e })
+                sock.error_reply(403, "Forbidden")
+              end
+            end
 
             if ["GET", "POST"].include?(sock.hdr_method[0])
 
