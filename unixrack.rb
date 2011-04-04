@@ -294,8 +294,9 @@ module Rack
             $stdout.flush
             Alarm.alarm(60)               # if command not handled in 60 seconds 
 
+            client_ip = sock.peeraddr.last
+
             if not allowed_ips.empty?
-              client_ip = sock.peeraddr.last
               if not (allowed_ips.any? { |e| client_ip.include? e })
                 sock.error_reply(403, "Forbidden")
               end
@@ -353,7 +354,7 @@ module Rack
 
               env["SERVER_NAME"] = host
               env["SERVER_PORT"] = port
-              env["REMOTE_ADDR"] = sock.peeraddr.last
+              env["REMOTE_ADDR"] = client_ip
 
               env["HTTP_VERSION"] = "HTTP/1.1"
               if sock.headers['If-Modified-Since']
