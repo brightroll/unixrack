@@ -40,9 +40,8 @@ put instructions here
 
 ## usage
 
-If you are using x:
+If you are using rackup and middleware and unixrack.rb is in 'lib/':
 
-    $ cmda arg1 arg2
-    $ cmdb --flag1 arg1 --flag2 arg2 arg3
+    $ RACK_ENV=stage bin/rackup --port 2897 -s unixrack -r 'lib/unixrack' config.ru
 
 

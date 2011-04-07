@@ -237,9 +237,9 @@ module Rack
       def self.run(app, options={})
 
         require 'socket'
-        port = options[:port] || 8080
-        host = options[:host] || '127.0.0.1'
-        listen = options[:listen] || '127.0.0.1'
+        port = options[:Port] || 8080
+        host = options[:Hostname] || 'localhost'
+        listen = options[:Host] || '127.0.0.1'
         allowed_ips = options[:allowed_ips] || []
         server = TCPServer.new(listen, port)
 
@@ -356,6 +356,13 @@ module Rack
               env["SERVER_PORT"] = port
               env["REMOTE_ADDR"] = client_ip
 
+              if sock.headers['User-Agent']
+                env["HTTP_USER_AGENT"] = sock.headers['User-Agent']
+              end
+              if sock.headers['Cookie']
+                env["HTTP_COOKIE"] = sock.headers['Cookie']
+              end
+
               env["HTTP_VERSION"] = "HTTP/1.1"
               if sock.headers['If-Modified-Since']
                 env["HTTP_IF_MODIFIED_SINCE"] = sock.headers['If-Modified-Since']
@@ -415,3 +422,5 @@ module Rack
     end
   end
 end
+
+Rack::Handler.register 'unixrack', 'Rack::Handler::UnixRack'
