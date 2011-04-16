@@ -234,6 +234,18 @@ module Rack
   module Handler
     class UnixRack
 
+      @@chdir = ''
+
+      # Set this in config.ru when in daemon mode
+      # Why? It appears that the behaviour of most servers
+      # is to expect to be in a certain dir when run
+      # Or, another way, rackup daemon mode is a bit strict
+      # and does the old-school chdir to '/' as a daemon.
+      # the fact is people probably don't use rackup often
+      def self.set_chdir(dir)
+        @@chdir = dir
+      end
+
       def self.run(app, options={})
 
         require 'socket'
@@ -260,6 +272,9 @@ module Rack
         trap(:TERM) { puts "#{$$}: Listener received TERM. Exiting."; $stdout.flush; exit! 0  }
         trap("SIGINT") { puts "#{$$}: Listener received INT. Exiting."; $stdout.flush; exit! 0  }
 
+        if not @@chdir.empty?
+          Dir.chdir @@chdir
+        end
         while true
           begin
             conn = server.accept
