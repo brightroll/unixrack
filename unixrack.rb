@@ -1,3 +1,6 @@
+#encoding: ASCII-8BIT
+#^^^ set the default encoding to ASCII-8
+
 # unixrack - ruby webserver compatible with rack using unix philosophy 
 #
 # license  - see COPYING 
@@ -10,7 +13,7 @@ require 'stringio'
 # Thx - Logan Capaldo 
 require 'dl/import'
 module Alarm
-  extend DL::Importable
+  extend DL::Importer
   if RUBY_PLATFORM =~ /darwin/
     so_ext = 'dylib'
   else
@@ -366,7 +369,7 @@ module Rack
                 uri_parts[0] = uri_parts[0].sub(/http:\/\/[^\/]+/, '')
               end
 
-              env["SCRIPT_NAME"] = uri_parts[0]
+              env["SCRIPT_NAME"] = ""
               env["PATH_INFO"] = uri_parts[0]
               env["QUERY_STRING"] = uri_parts[1]
 
