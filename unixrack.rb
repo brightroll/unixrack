@@ -179,8 +179,8 @@ module UnixRack
       @hdr_method = @hdr_method_line.split(" ")
 
       @hdr_field_lines = @hdr_lines.slice(1..-1) # would prefer first, and rest
-      @headers = @hdr_field_lines.inject({}) { |h, line| k, v = line.split(": "); h[k] = v; h }
-      @headers = canonicalize_headers(@headers)
+      headers = @hdr_field_lines.inject({}) { |h, line| k, v = line.split(": "); h[k] = v; h }
+      @headers = canonicalize_headers(headers)
       true
     end
 
