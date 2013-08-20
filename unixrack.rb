@@ -375,6 +375,7 @@ module Rack
 
               if sock.hdr_method[0] == "GET"
                 content = StringIO.new("")
+                content.set_encoding(Encoding::ASCII_8BIT)
               elsif sock.hdr_method[0] == "POST"
                 if not sock.headers.include?('Content-Length')
                   send_error_response!(sock, 400, "Bad Request no content-length", sock.hdr_method[0], sock.hdr_method[1])
@@ -397,6 +398,7 @@ module Rack
 
                 # It is required that we read all of the content prior to responding
                 content = sock.read_content
+                content.set_encoding(Encoding::ASCII_8BIT)
 
                 if content == nil
                   send_error_response!(sock, 400, "Bad Request not enough content", sock.hdr_method[0], sock.hdr_method[1])
@@ -419,7 +421,7 @@ module Rack
                 uri_parts[0] = uri_parts[0].sub(/http:\/\/[^\/]+/, '')
               end
 
-              env["SCRIPT_NAME"] = uri_parts[0]
+              env["SCRIPT_NAME"] = ''
               env["PATH_INFO"] = uri_parts[0]
               env["QUERY_STRING"] = uri_parts[1]
 
