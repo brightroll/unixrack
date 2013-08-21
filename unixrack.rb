@@ -447,10 +447,10 @@ module Rack
                 env["HTTP_RANGE"] = sock.headers['Range']
               end
               if sock.headers['X-Real-IP']
-                env["HTTP_X_REAL_IP'"] = sock.headers['Real-IP']
+                env["HTTP_X_REAL_IP"] = sock.headers['Real-IP']
               end
               if sock.headers['X-Forwarded-For']
-                env["HTTP_X_FORWARDED_FOR'"] = sock.headers['X-Forwarded-For']
+                env["HTTP_X_FORWARDED_FOR"] = sock.headers['X-Forwarded-For']
               end
               if sock.headers['Host']
                 env["HTTP_HOST"] = sock.headers['Host']
