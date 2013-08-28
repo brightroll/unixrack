@@ -220,7 +220,6 @@ module Rack
       end
 
       def self.log(response_code, message='-', method='-', url='-', options={})
-        return
         ip = @@client_ip || '-'
         now = Time.now
         duration = ((now.to_f - @@start_time.to_f) * 1000).to_i / 1000.0
