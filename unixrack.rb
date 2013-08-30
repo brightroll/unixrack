@@ -1,4 +1,4 @@
-# unixrack - ruby webserver compatible with rack using unix philosophy
+# unixrack - ruby webserver compatible with rack using old unix style
 #
 # license  - see COPYING
 
