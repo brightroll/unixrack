@@ -361,7 +361,7 @@ module Rack
             trap("ALRM") { log(0, "Child received ALARM during read_headers. Exiting."); exit! 2 }
             trap(:TERM) { log(0, "Child received TERM. Exiting."); exit! 0 }
 
-            Alarm.alarm(5) # if no command received in 5 secs
+            ::UnixRack::Alarm.alarm(5) # if no command received in 5 secs
 
             sock = ::UnixRack::Socket.new(conn)
             @@client_ip = sock.peeraddr.last
@@ -371,7 +371,7 @@ module Rack
             end
 
             trap("ALRM") { log(0, "Child received ALARM during response. Exiting."); exit! 2 }
-            Alarm.alarm(120) # if command not handled in 120 seconds
+            ::UnixRack::Alarm.alarm(120) # if command not handled in 120 seconds
 
             if not allowed_ips.empty?
               if not (allowed_ips.any? { |e| @@client_ip.include? e })

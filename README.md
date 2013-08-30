@@ -48,9 +48,15 @@ put instructions here
 
 ## Usage
 
-If you are using rackup and middleware and unixrack.rb is in 'lib/':
+Here is an example command to run the standard Rack lobster web app. 
+You can get the sample in the samples directory from the github repo
+at: https://github.com/drudru/unixrack. Copy lobster.ru into your current dir
+then run:
 
-    $ RACK_ENV=stage bin/rackup --port 2897 -s unixrack -r 'lib/unixrack' config.ru
+    $ RACK_ENV=stage rackup --port 4004 -s unixrack -r unixrack lobster.ru 
+
+To run your own application, just create your own rackup (.ru) file with your
+own Rack middleware.
 
 ## Contributing
 
