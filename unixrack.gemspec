@@ -1,10 +1,23 @@
-Gem::Specification.new do |s|
-  s.name = 'unixrack'
-  s.version = '0.1.0'
-  s.platform = Gem::Platform::RUBY #not sure how to specify a UNIX platform only, but I don't want to build OSX only gems
-  s.authors = ['Dru Nelson']
-  s.email = ['dru@brightroll.com']
-  s.files = %w(unixrack.rb COPYING README)
-  s.require_path = '.'
-  s.summary = 'ld School Super Solid Web Server for Ruby'
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'unixrack/version'
+
+Gem::Specification.new do |spec|
+  spec.name          = "unixrack"
+  spec.version       = Unixrack::VERSION
+  spec.authors       = ["Dru Nelson"]
+  spec.email         = ["drudru@gmail.com"]
+  spec.description   = %q{Simple Rack Compatible Web Server in Ruby}
+  spec.summary       = %q{Old School Super Solid Forking Web Server for Ruby}
+  spec.homepage      = ""
+  spec.license       = "MIT"
+
+  spec.files         = `git ls-files`.split($/)
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
+
+  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "rake"
 end
