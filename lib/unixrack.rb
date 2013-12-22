@@ -457,6 +457,9 @@ module Rack
               if sock.headers['X-Forwarded-For']
                 env["HTTP_X_FORWARDED_FOR"] = sock.headers['X-Forwarded-For']
               end
+              if sock.headers['X-Forwarded-Proto']
+                env["HTTP_X_FORWARDED_PROTO"] = sock.headers['X-Forwarded-Proto']
+              end
               if sock.headers['Host']
                 env["HTTP_HOST"] = sock.headers['Host']
               end
