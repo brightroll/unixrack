@@ -52,17 +52,16 @@ module UnixRack
     end
 
     def self.write_buff(io, buff)
-      len = buff.length
       nwritten = 0
 
       out_buff = buff
 
-      # buff should be UTF-8
+      # buff could be UTF-8
       while true
         nw = io.syswrite(out_buff)
         nwritten = nwritten + nw
         break if nw == out_buff.bytesize
-        out_buff = out_buff.slice(nw..-1)
+        out_buff = out_buff.byteslice(nw..-1)
       end
       nwritten
     end
