@@ -367,7 +367,7 @@ module Rack
             @@client_ip = sock.peeraddr.last
 
             if not sock.read_headers()
-              send_error_response!(sock, 400, "Bad Request")
+              send_error_response!(sock, 400, "Bad Request", "-", "-")
             end
 
             trap("ALRM") { log(0, "Child received ALARM during response. Exiting."); exit! 2 }
