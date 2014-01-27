@@ -327,7 +327,7 @@ module Rack
         end
 
         trap(:TERM) { log(0, "Listener received TERM. Exiting."); exit! 0 }
-        trap("SIGINT") { log(0, "Listener received INT. Exiting."); exit! 0 }
+        trap(:INT) { log(0, "Listener received INT. Exiting."); exit! 0 }
 
         if not @@chdir.empty?
           Dir.chdir @@chdir
@@ -358,7 +358,7 @@ module Rack
             server.close
             @@start_time = Time.now
 
-            trap("ALRM") { log(0, "Child received ALARM during read_headers. Exiting."); exit! 2 }
+            trap(:ALRM) { log(0, "Child received ALARM during read_headers. Exiting."); exit! 2 }
             trap(:TERM) { log(0, "Child received TERM. Exiting."); exit! 0 }
 
             ::UnixRack::Alarm.alarm(5) # if no command received in 5 secs
@@ -370,7 +370,7 @@ module Rack
               send_error_response!(sock, 400, "Bad Request")
             end
 
-            trap("ALRM") { log(0, "Child received ALARM during response. Exiting."); exit! 2 }
+            trap(:ALRM) { log(0, "Child received ALARM during response. Exiting."); exit! 2 }
             ::UnixRack::Alarm.alarm(120) # if command not handled in 120 seconds
 
             if not allowed_ips.empty?
