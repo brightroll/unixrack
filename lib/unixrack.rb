@@ -92,7 +92,7 @@ module UnixRack
         rescue EOFError
           retval = [false, "EOF", buff]
           break
-        rescue EOFError, Errno::ECONNRESET, Errno::EPIPE, Errno::EINVAL, Errno::EBADF
+        rescue Errno::ECONNRESET, Errno::EPIPE, Errno::EINVAL, Errno::EBADF
           retval = [false, "Exception occurred on socket read"]
           #log("Got an #{$!} from socket read")
           break
@@ -111,7 +111,7 @@ module UnixRack
         puts "#{$$}: Got an EOF from socket read"
         $stdout.flush
         return nil
-      rescue EOFError, Errno::ECONNRESET, Errno::EPIPE, Errno::EINVAL, Errno::EBADF
+      rescue Errno::ECONNRESET, Errno::EPIPE, Errno::EINVAL, Errno::EBADF
         puts "#{$$}: Got an #{$!} from socket read"
         $stdout.flush
         exit! 0
