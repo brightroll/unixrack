@@ -379,14 +379,14 @@ module Rack
               end
             end
 
-            if ["GET", "POST"].include?(sock.hdr_method[0])
+            if ['GET', 'POST', 'OPTIONS'].include?(sock.hdr_method[0])
 
               env = {}
 
-              if sock.hdr_method[0] == "GET"
+              if sock.hdr_method[0] == 'GET'
                 content = StringIO.new("")
                 content.set_encoding(Encoding::ASCII_8BIT) if content.respond_to?(:set_encoding)
-              elsif sock.hdr_method[0] == "POST"
+              elsif sock.hdr_method[0] == 'POST'
                 if not sock.headers.include?('Content-Length')
                   send_error_response!(sock, 400, "Bad Request no content-length", sock.hdr_method[0], sock.hdr_method[1])
                 end
@@ -413,6 +413,9 @@ module Rack
                 if content == nil
                   send_error_response!(sock, 400, "Bad Request not enough content", sock.hdr_method[0], sock.hdr_method[1])
                 end
+              elsif sock.hdr_method[0] == 'OPTIONS'
+                content = StringIO.new("")
+                content.set_encoding(Encoding::ASCII_8BIT) if content.respond_to?(:set_encoding)
               end
 
               app = ContentLength.new(app)
@@ -462,6 +465,9 @@ module Rack
               end
               if sock.headers['Host']
                 env["HTTP_HOST"] = sock.headers['Host']
+              end
+              if sock.headers['Origin']
+                env["Origin"] = sock.headers['Origin']
               end
 
               env["HTTP_VERSION"] = "HTTP/1.1"
